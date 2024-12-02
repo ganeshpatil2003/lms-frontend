@@ -63,6 +63,8 @@ const ProfilePage = () => {
     }
   }, [formData, formDataError, formDataSuccess]);
 
+  // const user = data.data
+
   if (isLoading) {
     return (
       <p className="m-auto text-5xl font-semibold text-gray-900">
@@ -71,6 +73,7 @@ const ProfilePage = () => {
     );
   }
   const { data: user } = data;
+  
   // console.log(data)
   const enrolledCourses = user.enrolledCourses;
 

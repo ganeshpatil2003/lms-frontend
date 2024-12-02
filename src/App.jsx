@@ -9,6 +9,7 @@ import Courses from './pages/student/Courses'
 import MyLearning from './pages/student/MyLearning'
 import ProfilePage from './pages/student/ProfilePage'
 
+
 const route = createBrowserRouter([
   {
     path:"/",
@@ -30,13 +31,15 @@ const route = createBrowserRouter([
       {
         path:"profile",
         element:<ProfilePage/>
-      }
+      },
+      {
+        path : "login",
+        element:<Login/>
+      },
+
     ]
   },
-  {
-    path : "login",
-    element:<Login/>
-  }
+ 
 ])
 const App = () => {
   return (

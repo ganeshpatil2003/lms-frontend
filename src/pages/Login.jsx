@@ -49,6 +49,7 @@ const Login = () => {
       error: loginError,
     },
   ] = useLoginUserMutation();
+
   const changeInputHandler = (e, type) => {
     const { name, value } = e.target;
     const type2 = type;
@@ -70,6 +71,7 @@ const Login = () => {
       toast.error(registerError.data.message || "Signup failed");
     }
     if (loginError) {
+      console.log(loginError);
       toast.error(loginError.data.message || "Login failed");
       // console.log(loginError.data.message)
     }
@@ -98,6 +100,8 @@ const Login = () => {
       });
     }
   };
+
+  // const user = data
   return (
     <div className="flex w-full items-center justify-center mt-20 ">
       <Tabs defaultValue="Register" className="w-[400px]">

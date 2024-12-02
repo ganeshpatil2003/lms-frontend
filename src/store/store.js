@@ -9,4 +9,8 @@ const store = configureStore({
     middleware : (defaultMiddelWare) => defaultMiddelWare().concat(userApi.middleware)
 })
 
+const initializeApp = async () => {
+    await store.dispatch(userApi.endpoints.getUser.initiate({},{forceRefetch:true}))
+}
+initializeApp();
 export default store

@@ -1,10 +1,13 @@
 import { Button } from "@/components/ui/button";
 import DarkMode from "@/pages/DarkMode";
+import { useGetUserQuery, useLogOutUserMutation } from "@/store/apis/userApi";
 import { Separator } from "@radix-ui/react-dropdown-menu";
 import { LogOut, Menu, School } from "lucide-react";
 
-import React from "react";
-import { Link } from "react-router-dom";
+import React, { useEffect } from "react";
+import { useSelector } from "react-redux";
+import { Link, useNavigate } from "react-router-dom";
+import { toast } from "sonner";
 import { Avatar, AvatarFallback, AvatarImage } from "./ui/avatar";
 import {
   DropdownMenu,
@@ -15,13 +18,11 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "./ui/dropdown-menu";
-import { Input } from "./ui/input";
-import { Label } from "./ui/label";
+
 import {
   Sheet,
   SheetClose,
   SheetContent,
-  SheetDescription,
   SheetFooter,
   SheetHeader,
   SheetTitle,
@@ -29,7 +30,23 @@ import {
 } from "./ui/sheet";
 
 const Navbar = () => {
-  const user = true;
+  const {user} = useSelector(store => store.authSlice)
+  const [logOutUser,{data,isSuccess,error}] = useLogOutUserMutation()
+  const navigate = useNavigate();
+  const handelLogOutClick = async () => {
+    await logOutUser();
+  }
+  useEffect(()=>{
+      if(isSuccess && data){
+        // console.log(data.message);
+        toast.success(data.message);
+        navigate('/login')
+      }
+      if(error){
+        toast.error(error.data.message);
+      }
+  },[isSuccess,error])
+  console.log(user)
   return (
     <div className="h-16  dark:bg-[#0A0A0A] bg-white border-b dark:border-b-gray-800 border-b-gray-200 fixed top-0 left-0 right-0 z-10 ">
       {/* desktopNavbar */}
@@ -43,7 +60,7 @@ const Navbar = () => {
             <DropdownMenu>
               <DropdownMenuTrigger asChild>
                 <Avatar>
-                  <AvatarImage src="https://github.com/shadcn.png" />
+                  <AvatarImage src={  user.avatar !== ""? user?.avatar : "https://github.com/shadcn.png"}  />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
@@ -51,7 +68,7 @@ const Navbar = () => {
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuGroup>
-                  <DropdownMenuItem>
+                  <DropdownMenuItem onClick = {handelLogOutClick}>
                     <LogOut />
                     <span>Log out</span>
                   </DropdownMenuItem>
