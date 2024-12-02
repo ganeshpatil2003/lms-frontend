@@ -88,8 +88,8 @@ const Navbar = () => {
             </DropdownMenu>
           ) : (
             <div className="flex items-center gap-2">
-              <Button variant="outline">Login</Button>
-              <Button>Signup</Button>
+              <Link to="/login"><Button variant="outline" >Login</Button></Link>
+              <Link to="/login"><Button>Signup</Button></Link>
             </div>
           )}
           <DarkMode />
