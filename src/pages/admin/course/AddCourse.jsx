@@ -13,6 +13,7 @@ import {
 import { useCreateCourseMutation } from "@/store/apis/courseApi";
 import { Loader, Loader2 } from "lucide-react";
 import React from "react";
+import { useEffect } from "react";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
@@ -26,17 +27,20 @@ const AddCourse = () => {
   const navigate = useNavigate();
   const onCreateCourseHandeler = async() => {
     const result = await createCourse({courseTitle,category:courseCategory})
+  }
+  useEffect(()=>{
     if(isSuccess){
-        console.log(data)
         toast.success(data.message);
-        setCourseCategory("")
-        setCourseTitle("")
+        setCourseCategory("");
+        setCourseTitle("");
+        navigate('/admin/courses');
+        
     }
     if(error){
-        console.log(error);
+        // console.log(error);
         toast.error(error.data.message);
     }
-  }
+  },[isLoading,isSuccess,error,data])
   
   return (
     <div className="flex-1 mx-10">
