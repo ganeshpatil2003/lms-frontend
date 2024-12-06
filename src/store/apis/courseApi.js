@@ -8,7 +8,7 @@ export const courseApi = createApi({
     baseUrl: COURSE_API,
     credentials: "include",
   }),
-  tagTypes:['Course'],
+  tagTypes: ["Course"],
   endpoints: (builder) => ({
     createCourse: builder.mutation({
       query: (inputData) => ({
@@ -16,14 +16,20 @@ export const courseApi = createApi({
         method: "POST",
         body: inputData,
       }),
-      invalidatesTags:['Course']
+      invalidatesTags: ["Course"],
     }),
     getCreatorCourses: builder.query({
       query: () => ({
         url: "/get-courses",
         method: "GET",
       }),
-      providesTags : ['Course']
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.data.map(({ _id }) => ({ type: "Course", id : _id })),
+              { type: "Course", id: "LIST" },
+            ]
+          : [{ type: "Course", id: "LIST" }],
     }),
     updateCourse: builder.mutation({
       query: ({ courseId, formData }) => ({
@@ -31,15 +37,21 @@ export const courseApi = createApi({
         method: "PATCH",
         body: formData,
       }),
-      invalidatesTags:['Course']
+      invalidatesTags: (result,error,{courseId}) => [{type:'Course',id: courseId}]
     }),
     getCourseById: builder.query({
       query: (courseId) => ({
         url: `/get-coursebyid/${courseId}`,
       }),
-      providesTags : ['Course']
+      providesTags: (result,error,{courseId}) => [{type:'Course',id: courseId}]
     }),
-    
+    publishToggel: builder.mutation({
+      query: ({ courseId, publish }) => ({
+        url: `/publish-toggel/${courseId}?publish=${publish}`,
+        method: "PATCH",
+      }),
+      invalidatesTags : (result,error,{courseId}) => [{type:'Course',id: courseId}]
+    }),
   }),
 });
 
@@ -48,4 +60,5 @@ export const {
   useGetCreatorCoursesQuery,
   useUpdateCourseMutation,
   useGetCourseByIdQuery,
+  usePublishToggelMutation,
 } = courseApi;

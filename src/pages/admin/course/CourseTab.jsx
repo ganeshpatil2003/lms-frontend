@@ -24,6 +24,7 @@ import { Loader, Loader2 } from "lucide-react";
 import { useNavigate, useParams } from "react-router-dom";
 import {
   useGetCourseByIdQuery,
+  usePublishToggelMutation,
   useUpdateCourseMutation,
 } from "@/store/apis/courseApi";
 import { useEffect } from "react";
@@ -32,8 +33,16 @@ import { toast } from "sonner";
 const CourseTab = () => {
   const navigate = useNavigate();
   const { id } = useParams();
-  const { data: courseData, isLoading: isCourseDataLoading ,isSuccess:courseisSuccess} =
-    useGetCourseByIdQuery(id);
+  const {
+    data: courseData,
+    isLoading: isCourseDataLoading,
+    isSuccess: courseisSuccess,
+    refetch
+  } = useGetCourseByIdQuery(id);
+  const [
+    publishToggel,
+    { data: publishData, isError: publishError, isSuccess: publishSuccess },
+  ] = usePublishToggelMutation();
   const [updateCourse, { data, isSuccess, isLoading, error }] =
     useUpdateCourseMutation();
 
@@ -49,10 +58,7 @@ const CourseTab = () => {
 
   const [onPriviewThumbnail, setOnPriviewThumbnail] = useState("");
 
-
-
   useEffect(() => {
-    
     if (data && isSuccess) {
       toast.success(data.message || "Course updated.");
       console.log(data);
@@ -60,10 +66,10 @@ const CourseTab = () => {
     if (error) {
       toast.error(error.data.message || "Course didn't update");
     }
+    
+  }, [data, isSuccess, error, id]);
 
-  }, [data, isSuccess, error , id]);
-
-  useEffect(()=>{
+  useEffect(() => {
     if (courseisSuccess && courseData) {
       // console.log(courseData)
       setInput({
@@ -76,9 +82,8 @@ const CourseTab = () => {
         courseThumbnail: courseData.data.courseThumbnail,
       });
     }
-  },[courseData,courseisSuccess])
+  }, [courseData, courseisSuccess]);
   //   console.log(id);
-  
 
   const handelOnChange = (e) => {
     // console.log(e)
@@ -113,6 +118,21 @@ const CourseTab = () => {
     //   console.log(`${key}: ${value}`);
     // }
   };
+
+  const handelPublish = async (publishData)=>{
+    let publishData2 = publishData
+    if(!publishData)publishData2=true
+    if(publishData)publishData2=false
+    try {
+      const res = await publishToggel({courseId:id,publish:publishData2})
+      if(res.data){
+        refetch();
+        toast.success(res.data.message)
+      }
+    } catch (error) {
+        toast.error('Unsuccessfull to publish or unpublish course.')
+    }
+  }
   if (isCourseDataLoading) {
     return (
       <div className="p-auto">
@@ -132,7 +152,11 @@ const CourseTab = () => {
           </CardDescription>
         </div>
         <div className="space-x-4">
-          <Button variant="outline">
+          <Button
+            variant="outline"
+            disabled={courseData.data.lectures === 0}
+            onClick={() => handelPublish(courseData.data.isPublished)}
+          >
             {courseData.data.isPublished ? "Unpublish" : "Publish"}
           </Button>
           <Button>Remove course</Button>

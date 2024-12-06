@@ -7,7 +7,7 @@ export const lectureApi = createApi({
     baseUrl: API_URL,
     credentials: "include",
   }),
-  tagTypes : ['lectures'],
+  tagTypes: ["lectures"],
   endpoints: (builder) => ({
     createLecture: builder.mutation({
       query: ({ courseId, formData }) => ({
@@ -15,15 +15,42 @@ export const lectureApi = createApi({
         method: "POST",
         body: formData,
       }),
-      invalidatesTags : ['lectures']
+      invalidatesTags: ["lectures"],
     }),
-    getCourseLecture : builder.query({
-        query : (courseId) => ({
-          url : `/get-lectures/${courseId}`
-        }),
-        providesTags : ['lectures']
-    })
+    getCourseLecture: builder.query({
+      query: (courseId) => ({
+        url: `/get-lectures/${courseId}`,
+      }),
+      providesTags: ["lectures"],
+    }),
+    getLecureById: builder.query({
+      query: (lectureId) => ({
+        url: `/getlecturebyid/${lectureId}`,
+      }),
+      providesTags: ["lectures"],
+    }),
+    editLecture: builder.mutation({
+      query: ({ courseId, lectureId, videoInfo,lectureTitle,isPriviewFree }) => ({
+        url: `/update-lecture/${courseId}/${lectureId}`,
+        method: "PATCH",
+        body: {videoInfo,lectureTitle,isPriviewFree},
+      }),
+      invalidatesTags: ["lectures"],
+    }),
+    removelecture: builder.mutation({
+      query: (lectureId) => ({
+        url: `remove-lecture/${lectureId}`,
+        method: "DELETE",
+      }),
+      invalidatesTags: ["lectures"],
+    }),
   }),
 });
 
-export const {useCreateLectureMutation , useGetCourseLectureQuery } = lectureApi;
+export const {
+  useCreateLectureMutation,
+  useGetCourseLectureQuery,
+  useGetLecureByIdQuery,
+  useEditLectureMutation,
+  useRemovelectureMutation,
+} = lectureApi;
