@@ -52,6 +52,11 @@ export const courseApi = createApi({
       }),
       invalidatesTags : (result,error,{courseId}) => [{type:'Course',id: courseId}]
     }),
+    getPublishedCourses : builder.query({
+      query : () => ({
+        url : '/getpublished-courses'
+      })
+    })
   }),
 });
 
@@ -61,4 +66,5 @@ export const {
   useUpdateCourseMutation,
   useGetCourseByIdQuery,
   usePublishToggelMutation,
+  useGetPublishedCoursesQuery,
 } = courseApi;
