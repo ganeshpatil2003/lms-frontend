@@ -3,6 +3,7 @@ import { courseApi } from "./apis/courseApi";
 import { lectureApi } from "./apis/lectureApi";
 import { userApi } from "./apis/userApi";
 import rootReducers from "./rootReducers";
+import { purchaseApi } from "./apis/purchaseApi";
 
 const store = configureStore({
   reducer: rootReducers,
@@ -11,6 +12,7 @@ const store = configureStore({
       .concat(userApi.middleware)
       .concat(courseApi.middleware)
       .concat(lectureApi.middleware)
+      .concat(purchaseApi.middleware)
 });
 
 const initializeApp = async () => {
