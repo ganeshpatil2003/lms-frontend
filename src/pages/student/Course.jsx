@@ -6,7 +6,7 @@ import { useNavigate } from "react-router-dom";
 
 const Course = ({course}) => {
   const navigate = useNavigate();
-  const {courseTitle,category,coursePrice,creator,courseThumbnail,_id} = course
+  const {courseTitle,category,coursePrice,creator,courseThumbnail,_id,courseLevel} = course
   return (
     <Card className="shadow-lg hover:shadow-2xl transition-all duration-300 transform hover:scale-105 rounded-lg">
       <img 
@@ -28,7 +28,7 @@ const Course = ({course}) => {
               <span>{courseTitle}</span>
             </div>
           </div>
-          <Badge className="bg-blue-600 transition-all text-white px-2 py-1 text-xs rounded-full">Advance</Badge>
+          <Badge className="bg-blue-600 transition-all text-white px-2 py-1 text-xs rounded-full">{courseLevel}</Badge>
         </div>
         <div className="text-lg font-bold">
             <span>

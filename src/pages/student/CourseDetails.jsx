@@ -24,7 +24,7 @@ const CourseDetails = () => {
     usePurchaseCourseDetailsQuery(courseId);
   const purchaseCourse = false;
   if (isLoading) return <LoadingSpinner></LoadingSpinner>;
-  console.log(data);
+  
   return (
     <div className="mt-20 space-y-5">
       <div className="bg-[#2D2F31] text-white">
@@ -87,8 +87,8 @@ const CourseDetails = () => {
               <div className="w-full ">
                 <div className="w-full aspect-video mb-4 ">
                   <ReactPlayer
-                    // url={data.data.course.lectures[0].videoUrl}
-                    url="http://res.cloudinary.com/dfhz3a2h0/video/upload/v1733429978/vwsgf0kzvlsjdw0zautw.mp4"
+                    url={data.data.course.lectures[0].videoUrl}
+                    // url="http://res.cloudinary.com/dfhz3a2h0/video/upload/v1733429978/vwsgf0kzvlsjdw0zautw.mp4"
                     controls={true}
                     width={"100%"}
                     height={"100%"}
