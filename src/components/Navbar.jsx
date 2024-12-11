@@ -30,7 +30,8 @@ import {
 } from "./ui/sheet";
 
 const Navbar = () => {
-  const {user} = useSelector(store => store.authSlice)
+  const {refetch} =useGetUserQuery()
+  const {user} = useSelector(store => store.auth)
   const [logOutUser,{data,isSuccess,error}] = useLogOutUserMutation()
   const navigate = useNavigate();
   const handelLogOutClick = async () => {
@@ -73,17 +74,20 @@ const Navbar = () => {
                     <span>Log out</span>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Link to ="my-learning">My learning</Link>
+                    <Link to ="my-learning"  onClick={() => refetch()}>My learning</Link>
                   </DropdownMenuItem>
                   <DropdownMenuItem>
-                    <Link to="profile">Edit profile</Link>
+                    <Link to="profile" onClick={() => refetch()}>Edit profile</Link>
+                  </DropdownMenuItem>
+                  <DropdownMenuItem>
+                    <Link to ="/">Home</Link>
                   </DropdownMenuItem>
                 </DropdownMenuGroup>
 
                 <DropdownMenuSeparator />
-                <DropdownMenuItem className=" bg-purple-400 text-white hover:bg-purple-400">
+                 {user.role === 'instructor' && <DropdownMenuItem className=" bg-purple-400 text-white hover:bg-purple-400">
                   <span className="m-auto"><Link to ='/admin/dashboard'>Dashboard</Link></span>
-                </DropdownMenuItem>
+                </DropdownMenuItem>}
               </DropdownMenuContent>
             </DropdownMenu>
           ) : (
@@ -101,14 +105,14 @@ const Navbar = () => {
           
           <h1 className=" font-extrabold tex-4xl">E-Learning</h1>
         </div>
-      <MobileNavBar/>
+      <MobileNavBar />
       </div>
     </div>
   );
 };
 
 const MobileNavBar = () => {
-  const role = "instructor"
+  const role2 = null
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -132,7 +136,7 @@ const MobileNavBar = () => {
           <span>Log out</span>
         </nav>
         {
-          role === "instructor" && (<SheetFooter>
+          role2 === "instructor" && (<SheetFooter>
             <SheetClose asChild>
               <Button>Dashboard</Button>
             </SheetClose>

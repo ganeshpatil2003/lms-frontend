@@ -21,6 +21,7 @@ import { toast } from "sonner";
 import Course from "./Course";
 
 const ProfilePage = () => {
+  
   const { data, isLoading, isSuccess, isError, refetch  } = useGetUserQuery();
 
   const [

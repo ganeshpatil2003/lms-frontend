@@ -7,6 +7,7 @@ export const userApi = createApi({
     baseUrl: USER_API,
     credentials: "include",
   }),
+  tagTypes : ['user'],
   endpoints: (builder) => ({
     registerUser: builder.mutation({
       query: (inputdata) => ({
@@ -29,7 +30,14 @@ export const userApi = createApi({
         } catch (error) {
           console.log(error);
         }
-      }
+      },
+      providesTags: (result) =>
+        result
+          ? [
+              ...result.data.map(({ _id }) => ({ type: "user", id : _id })),
+              { type: "user", id: "LIST" },
+            ]
+          : [{ type: "user", id: "LIST" }],
     }),
     getUser: builder.query({
       query: () => ({
@@ -42,7 +50,8 @@ export const userApi = createApi({
         } catch (error) {
           console.log(error)
         }
-      }
+      },
+      providesTags: ['user']
     }),
     logOutUser: builder.mutation({
       query: () => ({

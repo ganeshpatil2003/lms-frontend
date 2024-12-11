@@ -29,4 +29,4 @@ export const purchaseApi = createApi({
     })
 
 
-export const {usePurchaseCourseMutation,usePurchaseCourseDetailsQuery} = purchaseApi;
+export const {usePurchaseCourseMutation,usePurchaseCourseDetailsQuery,useAllPurchaseCoursesQuery} = purchaseApi;

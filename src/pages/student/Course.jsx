@@ -15,7 +15,7 @@ const Course = ({course}) => {
         alt="course"
       />
       <CardContent className = "space-y-2 p-3">
-        <h2 className="text-lg font-bold truncate hover:underline cursor-pointer" onClick = {() =>navigate(`course-details/${_id}`)}>
+        <h2 className="text-lg font-bold truncate hover:underline cursor-pointer" onClick = {() =>navigate(`/course-details/${_id}`)}>
           {course.subTitle}
         </h2>
         <div className="flex items-center justify-between">
@@ -25,7 +25,7 @@ const Course = ({course}) => {
               <AvatarFallback>CN</AvatarFallback>
             </Avatar>
             <div className="text-sm font-medium">
-              <span>{courseTitle}</span>
+              <span>{creator.username}</span>
             </div>
           </div>
           <Badge className="bg-blue-600 transition-all text-white px-2 py-1 text-xs rounded-full">{courseLevel}</Badge>

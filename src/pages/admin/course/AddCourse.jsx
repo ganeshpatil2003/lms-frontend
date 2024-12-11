@@ -86,6 +86,10 @@ const AddCourse = () => {
                 <SelectItem value="mongodb">Mongo db</SelectItem>
                 <SelectItem value="psgreysql">PostGreySQL</SelectItem>
                 <SelectItem value="rust">Rust</SelectItem>
+                <SelectItem value="javascript">Java Script</SelectItem>
+                <SelectItem value="html">HTML</SelectItem>
+                <SelectItem value="css">CSS</SelectItem>
+                <SelectItem value="webdev">Web Developement</SelectItem>
               </SelectGroup>
             </SelectContent>
           </Select>

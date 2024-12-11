@@ -37,7 +37,7 @@ const CourseTab = () => {
     data: courseData,
     isLoading: isCourseDataLoading,
     isSuccess: courseisSuccess,
-    refetch
+    refetch,
   } = useGetCourseByIdQuery(id);
   const [
     publishToggel,
@@ -66,7 +66,6 @@ const CourseTab = () => {
     if (error) {
       toast.error(error.data.message || "Course didn't update");
     }
-    
   }, [data, isSuccess, error, id]);
 
   useEffect(() => {
@@ -119,20 +118,20 @@ const CourseTab = () => {
     // }
   };
 
-  const handelPublish = async (publishData)=>{
-    let publishData2 = publishData
-    if(!publishData)publishData2=true
-    if(publishData)publishData2=false
+  const handelPublish = async (publishData) => {
+    let publishData2 = publishData;
+    if (!publishData) publishData2 = true;
+    if (publishData) publishData2 = false;
     try {
-      const res = await publishToggel({courseId:id,publish:publishData2})
-      if(res.data){
+      const res = await publishToggel({ courseId: id, publish: publishData2 });
+      if (res.data) {
         refetch();
-        toast.success(res.data.message)
+        toast.success(res.data.message);
       }
     } catch (error) {
-        toast.error('Unsuccessfull to publish or unpublish course.')
+      toast.error("Unsuccessfull to publish or unpublish course.");
     }
-  }
+  };
   if (isCourseDataLoading) {
     return (
       <div className="p-auto">
@@ -217,6 +216,10 @@ const CourseTab = () => {
                     <SelectItem value="mongodb">Mongo db</SelectItem>
                     <SelectItem value="psgreysql">PostGreySQL</SelectItem>
                     <SelectItem value="rust">Rust</SelectItem>
+                    <SelectItem value="javascript">Java Script</SelectItem>
+                    <SelectItem value="html">HTML</SelectItem>
+                    <SelectItem value="css">CSS</SelectItem>
+                    <SelectItem value="webdev">Web Developement</SelectItem>
                   </SelectGroup>
                 </SelectContent>
               </Select>

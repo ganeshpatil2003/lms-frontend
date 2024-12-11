@@ -18,6 +18,12 @@ import EditLecture from "./pages/admin/lecture/EditLecture";
 import CourseDetails from "./pages/student/CourseDetails";
 import CourseProgress from "./pages/student/CourseProgress";
 import SearchPage from "./pages/student/SearchPage";
+import {
+  AdminRoute,
+  AuthenticatedUser,
+  ProtectedRoute,
+} from "./components/ProtectedRoute";
+import PurchaseCourseProtectedRoute from "./components/PurchaseCourseProtectedRoute";
 
 const route = createBrowserRouter([
   {
@@ -35,34 +41,64 @@ const route = createBrowserRouter([
       },
       {
         path: "my-learning",
-        element: <MyLearning />,
+        element: (
+          <ProtectedRoute>
+            <MyLearning />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "profile",
-        element: <ProfilePage />,
+        element: (
+          <ProtectedRoute>
+            <ProfilePage />
+          </ProtectedRoute>
+        ),
       },
       {
         path: "login",
-        element: <Login />,
+        element: (
+          <AuthenticatedUser>
+            <Login />
+          </AuthenticatedUser>
+        ),
       },
       {
-        path : 'course-details/:courseId',
-        element: <CourseDetails/>
+        path: "course-details/:courseId",
+        element: (
+          <ProtectedRoute>
+            <CourseDetails />
+          </ProtectedRoute>
+        ),
       },
       {
-        path : 'course-progress/:courseId',
-        element: <CourseProgress/>
+        path: "course-progress/:courseId",
+        element: (
+          <ProtectedRoute>
+            <PurchaseCourseProtectedRoute>
+              <CourseProgress />
+            </PurchaseCourseProtectedRoute>
+          </ProtectedRoute>
+        ),
       },
       {
-        path : 'course/search',
-        element: <SearchPage/>
+        path: "course/search",
+        element: (
+          <ProtectedRoute>
+            <SearchPage />
+          </ProtectedRoute>
+        ),
       },
 
       // admin routes starts
 
       {
         path: "admin",
-        element: <Sidebar />,
+        element: (
+          <AdminRoute>
+            <Sidebar />
+          </AdminRoute>
+        ),
         children: [
           {
             path: "dashboard",
@@ -77,17 +113,17 @@ const route = createBrowserRouter([
             element: <AddCourse />,
           },
           {
-            path:"courses/:id",
-            element:<EditCourse/>
+            path: "courses/:id",
+            element: <EditCourse />,
           },
           {
-            path : "courses/:id/lecture",
-            element:<Lecture/>
+            path: "courses/:id/lecture",
+            element: <Lecture />,
           },
           {
-            path : 'courses/:id/lecture/:lectureId',
-            element : <EditLecture/>
-          }
+            path: "courses/:id/lecture/:lectureId",
+            element: <EditLecture />,
+          },
         ],
       },
     ],
