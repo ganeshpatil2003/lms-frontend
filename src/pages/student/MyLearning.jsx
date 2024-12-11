@@ -1,10 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import Course from "./Course";
 import CourseSkeleton from "./CourseSkeleton";
+import { useGetUserQuery } from "@/store/apis/userApi";
 
 const MyLearning = () => {
-  const isLoading = false;
-  const myCourses = [1,2,3,4,5];
+  const { data, isLoading, isSuccess, isError, refetch  } = useGetUserQuery();
+  
+  let enrolledCourses = data.data.enrolledCourses || [];
+  // useEffect(()=>{
+  //   enrolledCourses = data.data.enrolledCourses;
+  // },[data,isSuccess])
   return (
     <div className="pt-24 w-screen h-screen bg-white">
       <h2 className="max-w-5xl mx-auto font-semibold text-2xl">My Learning</h2>
@@ -20,10 +25,10 @@ const MyLearning = () => {
               <CourseSkeleton />
              
             </>
-          ) : myCourses.length === 0 ? (
+          ) : enrolledCourses.length === 0 ? (
             <h2 className=" font-semibold text-xl">Not any course enrolled</h2>
           ) : (
-            myCourses.map((cousrse, i) => <Course key={i} />)
+            enrolledCourses.map((course, i) => <Course key={i} course={course}/>)
           )}
         </div>
       </div>

@@ -16,7 +16,7 @@ const Course = ({course}) => {
       />
       <CardContent className = "space-y-2 p-3">
         <h2 className="text-lg font-bold truncate hover:underline cursor-pointer" onClick = {() =>navigate(`course-details/${_id}`)}>
-          React js full course in hindi 2024
+          {course.subTitle}
         </h2>
         <div className="flex items-center justify-between">
           <div className="flex items-center gap-3">

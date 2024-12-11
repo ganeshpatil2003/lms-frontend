@@ -45,6 +45,22 @@ export const courseApi = createApi({
       }),
       providesTags: (result,error,{courseId}) => [{type:'Course',id: courseId}]
     }),
+    getSearchCourses : builder.query({
+      query : ({searchQuery,categories,sortByPrice}) => { 
+        let querystring = `/search?query=${encodeURIComponent(searchQuery)}`
+        if(categories && categories.length > 0 ){
+          const categorieString = categories.map((category) => encodeURIComponent(category)).join(',');
+          querystring += `&categories=${categorieString}`
+        }
+        if(sortByPrice){
+           querystring += `&sortByPrice=${encodeURIComponent(sortByPrice)}`
+        }
+        return {
+          url : querystring,
+          methode : 'GET'
+        }
+      }
+    }),
     publishToggel: builder.mutation({
       query: ({ courseId, publish }) => ({
         url: `/publish-toggel/${courseId}?publish=${publish}`,
@@ -67,4 +83,5 @@ export const {
   useGetCourseByIdQuery,
   usePublishToggelMutation,
   useGetPublishedCoursesQuery,
+  useGetSearchCoursesQuery,
 } = courseApi;

@@ -82,7 +82,7 @@ const Navbar = () => {
 
                 <DropdownMenuSeparator />
                 <DropdownMenuItem className=" bg-purple-400 text-white hover:bg-purple-400">
-                  <span className="m-auto">Dashboard</span>
+                  <span className="m-auto"><Link to ='/admin/dashboard'>Dashboard</Link></span>
                 </DropdownMenuItem>
               </DropdownMenuContent>
             </DropdownMenu>

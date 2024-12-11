@@ -17,6 +17,7 @@ import Lecture from "./pages/admin/lecture/Lecture";
 import EditLecture from "./pages/admin/lecture/EditLecture";
 import CourseDetails from "./pages/student/CourseDetails";
 import CourseProgress from "./pages/student/CourseProgress";
+import SearchPage from "./pages/student/SearchPage";
 
 const route = createBrowserRouter([
   {
@@ -51,6 +52,10 @@ const route = createBrowserRouter([
       {
         path : 'course-progress/:courseId',
         element: <CourseProgress/>
+      },
+      {
+        path : 'course/search',
+        element: <SearchPage/>
       },
 
       // admin routes starts

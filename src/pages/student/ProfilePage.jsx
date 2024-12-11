@@ -182,7 +182,7 @@ const ProfilePage = () => {
                   <h2 className="text-lg">You haven't enrolled yet :) </h2>
                 </>
               ) : (
-                enrolledCourses.map((course, i) => <Course key={i} />)
+                enrolledCourses.map((course, i) => <Course key={i} course={course}/>)
               )}
             </div>
           </div>
